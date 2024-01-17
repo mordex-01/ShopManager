@@ -1,0 +1,2 @@
+# ShopManager
+managingshop
