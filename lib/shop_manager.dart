@@ -18,7 +18,9 @@ class ShopActions {
   static void backToShopMenu() {
     printMenu();
     int userInput = inputUser();
-    while (userInput != 1 && userInput != 6 && userInput != 2) {
+    while (
+        userInput != 1 && userInput != 6 && userInput != 2 && userInput != 3) {
+      print("Try to input Valid number");
       printMenu();
       userInput = inputUser();
     }
@@ -26,7 +28,11 @@ class ShopActions {
       ProductActions.productRegistration();
     }
     if (userInput == 2) {
-      showProducts();
+      ProductActions.showProducts();
+      ShopActions.backToShopMenu();
+    }
+    if (userInput == 3) {
+      ProductActions.deleteProducts();
       ShopActions.backToShopMenu();
     }
     if (userInput == 6) {
@@ -92,14 +98,38 @@ class ProductActions {
     print("Product registration is complete");
     ShopActions.backToShopMenu();
   }
-}
 
-showProducts() {
-  print("Product List :");
-  for (var Shop in Shop.productsList) {
-    print(
-        "ID:${Shop.id} Name : ${Shop.productName}, Price : ${Shop.price}T, Count : ${Shop.numberOfProducts}\n");
-    Shop.id + 1;
+  static showProducts() {
+    print("All Of Product List :");
+    for (var Shop in Shop.productsList) {
+      print(
+          "ID:${Shop.id} Name : ${Shop.productName}, Price : ${Shop.price}T, Count : ${Shop.numberOfProducts}\n");
+      Shop.id + 1;
+    }
+  }
+
+  static deleteProducts() {
+    print("Delete Products :");
+    for (var Shop in Shop.productsList) {
+      print(
+          "ID:${Shop.id} Name : ${Shop.productName}, Price : ${Shop.price}T, Count : ${Shop.numberOfProducts}\n ");
+    }
+    print("Enter ${Shop.productsList.length} To Cancel");
+    print("Enter product ID to delete :");
+    int id = int.parse(stdin.readLineSync()!);
+    //check if user wants to back to menu
+    if (id == Shop.productsList.length) {
+      print("Cancelled");
+      ShopActions.backToShopMenu();
+    }
+    //check if user Enter Wrong Id
+    if (id < 0 || id > Shop.productsList.length) {
+      print("( Error )Please Enter Valid ID");
+      ShopActions.backToShopMenu();
+    }
+    Shop.productsList.removeAt(id);
+
+    print("Delete is complete");
   }
 }
 
@@ -118,15 +148,6 @@ int inputUser() {
   }
   x = int.parse(userInput);
   return x;
-}
-
-int priceInput(inputUserr) {
-  if (inputUserr == null || inputUserr.isEmpty) {
-    print("Enter Valid Number :");
-    return inputUser();
-  } else {
-    return int.parse(inputUserr);
-  }
 }
 
 void printMenu() => print("""

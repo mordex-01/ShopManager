@@ -5,6 +5,8 @@ void main() {
   printProducts();
   addProducts();
   printProducts();
+  deleteProducts();
+  printProducts();
 }
 
 class Products {
@@ -30,6 +32,12 @@ addProducts() {
   id = Products.productsList.length;
   var product = Products(name!, number, price, id);
   Products.productsList.add(product);
+}
+
+deleteProducts() {
+  print('Enter product id: ');
+  var id = int.parse(stdin.readLineSync()!);
+  Products.productsList.removeAt(id);
 }
 
 printProducts() {
