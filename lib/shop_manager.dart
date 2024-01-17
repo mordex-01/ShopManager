@@ -18,8 +18,11 @@ class ShopActions {
   static void backToShopMenu() {
     printMenu();
     int userInput = inputUser();
-    while (
-        userInput != 1 && userInput != 6 && userInput != 2 && userInput != 3) {
+    while (userInput != 1 &&
+        userInput != 6 &&
+        userInput != 2 &&
+        userInput != 3 &&
+        userInput != 4) {
       print("Try to input Valid number");
       printMenu();
       userInput = inputUser();
@@ -33,6 +36,10 @@ class ShopActions {
     }
     if (userInput == 3) {
       ProductActions.deleteProducts();
+      ShopActions.backToShopMenu();
+    }
+    if (userInput == 4) {
+      ProductActions.editProducts();
       ShopActions.backToShopMenu();
     }
     if (userInput == 6) {
@@ -130,6 +137,47 @@ class ProductActions {
     Shop.productsList.removeAt(id);
 
     print("Delete is complete");
+  }
+
+  static editProducts() {
+    print("Edit Products :");
+    for (var Shop in Shop.productsList) {
+      print(
+          "ID:${Shop.id} Name : ${Shop.productName}, Price : ${Shop.price}T, Count : ${Shop.numberOfProducts}\n ");
+    }
+    print("Enter ${Shop.productsList.length} To Cancel");
+    print("Enter product ID to Edit :");
+    int id = int.parse(stdin.readLineSync()!);
+    //check if user wants to back to menu
+    while (id == Shop.productsList.length) {
+      print("Cancelled");
+      ShopActions.backToShopMenu();
+    }
+    //check if user Enter Wrong Id
+    while (id < 0 || id > Shop.productsList.length) {
+      print("( Error )Please Enter Valid ID");
+      ShopActions.backToShopMenu();
+    }
+    print("(Enter New product name)(0-back to menu)");
+    String? name = stdin.readLineSync();
+    if (name == "0") {
+      print("Cancelled");
+      ShopActions.backToShopMenu();
+    }
+    print("(Enter the number of products)(0-back to menu)");
+    String? number = stdin.readLineSync();
+    if (number == "0") {
+      print("Cancelled");
+      ShopActions.backToShopMenu();
+    }
+    print("(Enter the Price)(0-back to menu)");
+    String? price = stdin.readLineSync();
+    if (price == "0") {
+      print("Cancelled");
+      ShopActions.backToShopMenu();
+    }
+    Shop.productsList[id] =
+        Shop(name!, int.parse(number!), int.parse(price!), id);
   }
 }
 
