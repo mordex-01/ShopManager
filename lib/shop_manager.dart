@@ -5,27 +5,20 @@ void main() {
 }
 
 class Shop {
-  static List<Shop> products = [];
+  static List<Shop> productsList = [];
 
-  Shop(
-    this.productName,
-    this.numberOfProducts,
-    this.price,
-  );
+  Shop(this.productName, this.numberOfProducts, this.price, this.id);
+  int id;
   String productName;
   int numberOfProducts;
   int price;
-  @override
-  String toString() {
-    return "$productName, $numberOfProducts, $price";
-  }
 }
 
 class ShopActions {
   static void backToShopMenu() {
     printMenu();
     int userInput = inputUser();
-    while (userInput != 1 && userInput != 6) {
+    while (userInput != 1 && userInput != 6 && userInput != 2) {
       printMenu();
       userInput = inputUser();
     }
@@ -33,7 +26,8 @@ class ShopActions {
       ProductActions.productRegistration();
     }
     if (userInput == 2) {
-      ProductActions.showProductList();
+      showProducts();
+      ShopActions.backToShopMenu();
     }
     if (userInput == 6) {
       print("GoodBye!");
@@ -42,10 +36,9 @@ class ShopActions {
   }
 }
 
-class ProductActions extends Shop {
-  ProductActions(String productName, int numberOfProducts, int price)
-      : super(productName, numberOfProducts, price);
+class ProductActions {
   static productRegistration() {
+    int id = Shop.productsList.length;
     print("Product registration :");
     print("(Enter product name)(0-back to menu)");
     String? name = stdin.readLineSync();
@@ -95,14 +88,18 @@ class ProductActions extends Shop {
       print("(Error)Enter Valid Price :");
       return ProductActions.productRegistration();
     }
-    Shop.products.add(Shop(name, int.parse(number), int.parse(price)));
+    Shop.productsList.add(Shop(name, int.parse(number), int.parse(price), id));
     print("Product registration is complete");
     ShopActions.backToShopMenu();
   }
+}
 
-  static showProductList() {
-    print("List of products :");
-    print(Shop.products);
+showProducts() {
+  print("Product List :");
+  for (var Shop in Shop.productsList) {
+    print(
+        "ID:${Shop.id} Name : ${Shop.productName}, Price : ${Shop.price}T, Count : ${Shop.numberOfProducts}\n");
+    Shop.id + 1;
   }
 }
 
