@@ -184,12 +184,12 @@ class ProductActions {
     //check if name == null or empty
     if (name == null || name.isEmpty) {
       print("(Error)Enter Valid Name :");
-      return ProductActions.productRegistration();
+      return ProductActions.editProducts();
     }
     //check if name is a number
     if (int.tryParse(name) != null) {
       print("(Error)Enter Valid Name :");
-      return ProductActions.productRegistration();
+      return ProductActions.editProducts();
     }
     print("(Enter the number of products)(0-back to menu)");
     String? number = stdin.readLineSync();
@@ -200,12 +200,12 @@ class ProductActions {
     //check if number == null or empty
     if (number == null || number.isEmpty) {
       print("(Error)Enter Valid Number :");
-      return ProductActions.productRegistration();
+      return ProductActions.editProducts();
     }
     //check if number contains a letter
     if (int.tryParse(number) == null) {
       print("(Error)Enter Valid Number :");
-      return ProductActions.productRegistration();
+      return ProductActions.editProducts();
     }
     print("(Enter the Price)(0-back to menu)");
     String? price = stdin.readLineSync();
@@ -216,12 +216,12 @@ class ProductActions {
     //check if price == null or empty
     if (price == null || price.isEmpty) {
       print("(Error)Enter Valid Price :");
-      return ProductActions.productRegistration();
+      return ProductActions.editProducts();
     }
     //check if number contains a letter
     if (int.tryParse(price) == null) {
       print("(Error)Enter Valid Price :");
-      return ProductActions.productRegistration();
+      return ProductActions.editProducts();
     }
     Shop.productsList[id] = Shop(name, int.parse(number), int.parse(price), id);
   }
