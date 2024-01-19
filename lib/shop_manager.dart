@@ -52,6 +52,33 @@ class ShopActions {
       exit(0);
     }
   }
+
+  static int inputUser() {
+    int x;
+    String? userInput = stdin.readLineSync();
+    if (userInput == null || userInput.isEmpty) {
+      printMenu();
+      print("(Error)Please Enter Valid Number :");
+      return inputUser();
+    }
+    if (int.tryParse(userInput) == null) {
+      printMenu();
+      print("(Error)Please Enter Valid Number :");
+      return inputUser();
+    }
+    x = int.parse(userInput);
+    return x;
+  }
+
+  static printMenu() => print("""
+Shop Menu(Write A Number)
+1-Product registration
+2-List of products
+3-Delete products
+4-Edit products
+5-Display finished products
+6-Exit
+""");
 }
 
 class ProductActions {
@@ -236,30 +263,3 @@ class ProductActions {
     }
   }
 }
-
-int inputUser() {
-  int x;
-  String? userInput = stdin.readLineSync();
-  if (userInput == null || userInput.isEmpty) {
-    printMenu();
-    print("(Error)Please Enter Valid Number :");
-    return inputUser();
-  }
-  if (int.tryParse(userInput) == null) {
-    printMenu();
-    print("(Error)Please Enter Valid Number :");
-    return inputUser();
-  }
-  x = int.parse(userInput);
-  return x;
-}
-
-void printMenu() => print("""
-Shop Menu(Write A Number)
-1-Product registration
-2-List of products
-3-Delete products
-4-Edit products
-5-Display finished products
-6-Exit
-""");
