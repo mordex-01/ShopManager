@@ -1,8 +1,7 @@
 import 'dart:io';
 
 void main() {
-  ShopActions shopActions = ShopActions();
-  shopActions.backToShopMenu();
+  ShopActions.backToShopMenu();
 }
 
 class Shop {
@@ -16,9 +15,7 @@ class Shop {
 }
 
 class ShopActions {
-  ProductActions productActions = ProductActions();
-
-  void backToShopMenu() {
+  static void backToShopMenu() {
     printMenu();
     int userInput = inputUser();
     while (userInput != 1 &&
@@ -32,23 +29,23 @@ class ShopActions {
       userInput = inputUser();
     }
     if (userInput == 1) {
-      productActions.productRegistration();
+      ProductActions.productRegistration();
     }
     if (userInput == 2) {
-      productActions.showProducts();
-      backToShopMenu();
+      ProductActions.showProducts();
+      ShopActions.backToShopMenu();
     }
     if (userInput == 3) {
-      productActions.deleteProducts();
-      backToShopMenu();
+      ProductActions.deleteProducts();
+      ShopActions.backToShopMenu();
     }
     if (userInput == 4) {
-      productActions.editProducts();
-      backToShopMenu();
+      ProductActions.editProducts();
+      ShopActions.backToShopMenu();
     }
     if (userInput == 5) {
-      productActions.finishidProducts();
-      backToShopMenu();
+      ProductActions.finishidProducts();
+      ShopActions.backToShopMenu();
     }
     if (userInput == 6) {
       print("GoodBye!");
@@ -85,64 +82,63 @@ Shop Menu(Write A Number)
 }
 
 class ProductActions {
-  ShopActions shopActions = ShopActions();
-  productRegistration() {
+  static productRegistration() {
     print("Product registration :");
     print("(Enter product name)(0-back to menu)");
     String? name = stdin.readLineSync();
     //check if name == 0
     if (name == "0") {
-      shopActions.backToShopMenu();
+      ShopActions.backToShopMenu();
     }
     //check if name == null or empty
     if (name == null || name.isEmpty) {
       print("(Error)Enter Valid Name :");
-      return productRegistration();
+      return ProductActions.productRegistration();
     }
     //check if name is a number
     if (int.tryParse(name) != null) {
       print("(Error)Enter Valid Name :");
-      return productRegistration();
+      return ProductActions.productRegistration();
     }
     print("(Enter the number of products)(0-back to menu)");
     String? number = stdin.readLineSync();
     //check if number == 0
     if (number == "0") {
-      shopActions.backToShopMenu();
+      ShopActions.backToShopMenu();
     }
     //check if number == null or empty
     if (number == null || number.isEmpty) {
       print("(Error)Enter Valid Number :");
-      return productRegistration();
+      return ProductActions.productRegistration();
     }
     //check if number contains a letter
     if (int.tryParse(number) == null) {
       print("(Error)Enter Valid Number :");
-      return productRegistration();
+      return ProductActions.productRegistration();
     }
     print("(Enter the price)(0-back to menu)");
     String? price = stdin.readLineSync();
     //check if price == 0
     if (price == "0") {
-      shopActions.backToShopMenu();
+      ShopActions.backToShopMenu();
     }
     //check if price == null or empty
     if (price == null || price.isEmpty) {
       print("(Error)Enter Valid Price :");
-      return productRegistration();
+      return ProductActions.productRegistration();
     }
     //check if number contains a letter
     if (int.tryParse(price) == null) {
       print("(Error)Enter Valid Price :");
-      return productRegistration();
+      return ProductActions.productRegistration();
     }
     int id = Shop.productsList.length;
     Shop.productsList.add(Shop(name, int.parse(number), int.parse(price), id));
     print("Product registration is complete");
-    shopActions.backToShopMenu();
+    ShopActions.backToShopMenu();
   }
 
-  showProducts() {
+  static showProducts() {
     print("All Of Product List :");
     for (var Shop in Shop.productsList) {
       print(
@@ -150,7 +146,7 @@ class ProductActions {
     }
   }
 
-  deleteProducts() {
+  static deleteProducts() {
     List<int> ids = [];
     print("Delete Products :");
     for (var shop in Shop.productsList) {
@@ -163,30 +159,30 @@ class ProductActions {
     String? userInput = stdin.readLineSync();
     if (int.tryParse(userInput!) == null) {
       print("Cancelled");
-      shopActions.backToShopMenu();
+      ShopActions.backToShopMenu();
     }
     int id = int.parse(userInput);
     //check if user wants to back to menu
     if (id == ids.length + 1) {
       print("Cancelled");
-      shopActions.backToShopMenu();
+      ShopActions.backToShopMenu();
     }
     //check if user Enter Wrong Id
     if (id < 0 || id > ids.length + 1) {
       print("( Error )Please Enter Valid ID");
-      shopActions.backToShopMenu();
+      ShopActions.backToShopMenu();
     }
     if (ids.contains(id)) {
       Shop.productsList.removeAt(id);
       ids.removeAt(id);
     } else {
       print("( Error )Please Enter Valid ID");
-      shopActions.backToShopMenu();
+      ShopActions.backToShopMenu();
     }
     print("Delete is complete");
   }
 
-  editProducts() {
+  static editProducts() {
     print("Edit Products :");
 
     for (var Shop in Shop.productsList) {
@@ -198,72 +194,72 @@ class ProductActions {
     String? userInput = stdin.readLineSync();
     if (int.tryParse(userInput!) == null) {
       print("Cancelled");
-      shopActions.backToShopMenu();
+      ShopActions.backToShopMenu();
     }
     int id = int.parse(userInput);
 
     //check if user wants to back to menu
     while (id == Shop.productsList.length) {
       print("Cancelled");
-      shopActions.backToShopMenu();
+      ShopActions.backToShopMenu();
     }
     //check if user Enter Wrong Id
     while (id < 0 || id > Shop.productsList.length) {
       print("( Error )Please Enter Valid ID");
-      shopActions.backToShopMenu();
+      ShopActions.backToShopMenu();
     }
     print("(Enter New product name)(0-back to menu)");
     String? name = stdin.readLineSync();
     if (name == "0") {
       print("Cancelled");
-      shopActions.backToShopMenu();
+      ShopActions.backToShopMenu();
     }
     //check if name == null or empty
     if (name == null || name.isEmpty) {
       print("(Error)Enter Valid Name :");
-      return editProducts();
+      return ProductActions.editProducts();
     }
     //check if name is a number
     if (int.tryParse(name) != null) {
       print("(Error)Enter Valid Name :");
-      return editProducts();
+      return ProductActions.editProducts();
     }
     print("(Enter the number of products)(0-back to menu)");
     String? number = stdin.readLineSync();
     if (number == "0") {
       print("Cancelled");
-      shopActions.backToShopMenu();
+      ShopActions.backToShopMenu();
     }
     //check if number == null or empty
     if (number == null || number.isEmpty) {
       print("(Error)Enter Valid Number :");
-      return editProducts();
+      return ProductActions.editProducts();
     }
     //check if number contains a letter
     if (int.tryParse(number) == null) {
       print("(Error)Enter Valid Number :");
-      return editProducts();
+      return ProductActions.editProducts();
     }
     print("(Enter the Price)(0-back to menu)");
     String? price = stdin.readLineSync();
     if (price == "0") {
       print("Cancelled");
-      shopActions.backToShopMenu();
+      ShopActions.backToShopMenu();
     }
     //check if price == null or empty
     if (price == null || price.isEmpty) {
       print("(Error)Enter Valid Price :");
-      return editProducts();
+      return ProductActions.editProducts();
     }
     //check if number contains a letter
     if (int.tryParse(price) == null) {
       print("(Error)Enter Valid Price :");
-      return editProducts();
+      return ProductActions.editProducts();
     }
     Shop.productsList[id] = Shop(name, int.parse(number), int.parse(price), id);
   }
 
-  finishidProducts() {
+  static finishidProducts() {
     print("Products Less Than 5 count :");
     for (var Shop in Shop.productsList) {
       if (Shop.numberOfProducts < 5) {
