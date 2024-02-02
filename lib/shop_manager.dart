@@ -83,7 +83,6 @@ Shop Menu(Write A Number)
 
 class ProductActions {
   static productRegistration() {
-    int id = Shop.productsList.length;
     print("Product registration :");
     print("(Enter product name)(0-back to menu)");
     String? name = stdin.readLineSync();
@@ -133,6 +132,7 @@ class ProductActions {
       print("(Error)Enter Valid Price :");
       return ProductActions.productRegistration();
     }
+    int id = Shop.productsList.length;
     Shop.productsList.add(Shop(name, int.parse(number), int.parse(price), id));
     print("Product registration is complete");
     ShopActions.backToShopMenu();
@@ -143,17 +143,18 @@ class ProductActions {
     for (var Shop in Shop.productsList) {
       print(
           "ID:${Shop.id} Name : ${Shop.productName}, Price : ${Shop.price}T, Count : ${Shop.numberOfProducts}\n");
-      Shop.id + 1;
     }
   }
 
   static deleteProducts() {
+    List<int> ids = [];
     print("Delete Products :");
-    for (var Shop in Shop.productsList) {
+    for (var shop in Shop.productsList) {
+      ids.add(shop.id);
       print(
-          "ID:${Shop.id} Name : ${Shop.productName}, Price : ${Shop.price}T, Count : ${Shop.numberOfProducts}\n ");
+          "ID:${shop.id} Name : ${shop.productName}, Price : ${shop.price}T, Count : ${shop.numberOfProducts}\n ");
     }
-    print("Enter ${Shop.productsList.length} To Cancel");
+    print("Enter ${ids.length + 1} To Cancel");
     print("Enter product ID to delete :");
     String? userInput = stdin.readLineSync();
     if (int.tryParse(userInput!) == null) {
@@ -162,17 +163,22 @@ class ProductActions {
     }
     int id = int.parse(userInput);
     //check if user wants to back to menu
-    if (id == Shop.productsList.length) {
+    if (id == ids.length + 1) {
       print("Cancelled");
       ShopActions.backToShopMenu();
     }
     //check if user Enter Wrong Id
-    if (id < 0 || id > Shop.productsList.length) {
+    if (id < 0 || id > ids.length + 1) {
       print("( Error )Please Enter Valid ID");
       ShopActions.backToShopMenu();
     }
-    Shop.productsList.removeAt(id);
-
+    if (ids.contains(id)) {
+      Shop.productsList.removeAt(id);
+      ids.removeAt(id);
+    } else {
+      print("( Error )Please Enter Valid ID");
+      ShopActions.backToShopMenu();
+    }
     print("Delete is complete");
   }
 
